@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — X Observatory</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0; line-height: 1.7;
+      background: #fafafa; color: #1a1a1a;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { background: #14171c; color: #e6e8eb; }
+      a { color: #7ab8ff; }
+      .card, footer { background: #1c2027 !important; border-color: #2c323c !important; }
+    }
+    main { max-width: 720px; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+    h1 { font-size: 1.7rem; }
+    h2 { font-size: 1.15rem; margin-top: 2rem; }
+    .card {
+      background: #fff; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 1.5rem 1.75rem; margin-top: 1.5rem;
+    }
+    .meta { color: #6b7280; font-size: .95rem; }
+    footer {
+      border-top: 1px solid #e5e7eb; margin-top: 3rem; padding-top: 1.25rem;
+      font-size: .9rem; color: #6b7280;
+    }
+    a { color: #1a56db; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Privacy Policy</h1>
+  <p class="meta">X Observatory &middot; Last updated: 2026-09-02</p>
+
+  <div class="card">
+    <p>
+      X Observatory is a local-first, read-only Chrome extension for researching public X
+      accounts and content selected by the user.
+    </p>
+
+    <h2>Data handled</h2>
+    <p>
+      The extension may handle public X profile, relationship, search, post, and
+      post-participant data when the user starts a collection task. It also handles
+      collection job metadata, source coverage, evidence, derived topics, intent, and
+      scores. Raw business data is stored in browser IndexedDB until the user deletes it
+      or removes the extension. Standard data exports are created only on explicit user
+      action.
+    </p>
+    <p>
+      Google OAuth is used only to establish the current user's identity for the X
+      Observatory service. The Google access token remains in Chrome Identity cache and
+      transient extension/auth-function memory. The auth function validates its audience
+      and issues a pseudonymous, user-bound service token valid for at most five minutes.
+      The service does not store the Google account identifier, email address, token, or
+      service token.
+    </p>
+    <p>
+      X cookies, CSRF tokens, Authorization values, transaction IDs, Google access
+      tokens, and service tokens are not written to IndexedDB, extension persistent
+      storage, exports, application logs, or analytics. X cookies remain browser-managed;
+      X Authorization and CSRF values remain in the active page's in-memory request
+      wrapper.
+    </p>
+
+    <h2>Service boundary</h2>
+    <p>
+      The transaction service receives only the read-only method/path, public
+      verification key, animation frame paths, and public X JavaScript asset URL needed
+      to generate a single-use transaction ID. It does not receive X cookies, CSRF,
+      Authorization values, request variables, features, cursors, account input, request
+      body, or X response data.
+    </p>
+
+    <h2>What we do not do</h2>
+    <p>
+      The extension does not sell data, use data for advertising, transfer data to data
+      brokers, or permit human review of collected content. It does not infer political,
+      health, religious, racial or ethnic, sexual-orientation, or financial attributes.
+      It performs no write actions on X: no follows, likes, reposts, replies, or messages.
+    </p>
+
+    <h2>User control and security</h2>
+    <p>
+      Users choose the target and sources, can stop collection at any time, can delete
+      local projects, and can choose whether to export data. Missing or incomplete
+      sources remain Unknown and are traceable to their collection job and source.
+      Service traffic uses HTTPS, bounded schemas, fixed read-only allowlists, and
+      short-lived tokens.
+    </p>
+    <p>
+      Use of information received from Google APIs complies with the
+      <a href="https://developers.google.com/terms/api-services-user-data-policy">Google
+      API Services User Data Policy</a>, including the Limited Use requirements.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Report privacy or security issues to
+      <a href="mailto:v1nnnnn@outlook.com">v1nnnnn@outlook.com</a> or at
+      <a href="https://github.com/TabTabZL/X-Observatory/issues">GitHub Issues</a>.
+    </p>
+  </div>
+
+  <footer>
+    <a href="./">&larr; X Observatory</a> &middot;
+    This site sets no cookies, runs no analytics, and loads no third-party scripts.
+  </footer>
+</main>
+</body>
+</html>
