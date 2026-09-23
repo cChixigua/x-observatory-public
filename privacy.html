@@ -30,21 +30,27 @@
       font-size: .9rem; color: #6b7280;
     }
     a { color: #1a56db; }
+    .lang-toggle {
+      float: right; border: 1px solid #d1d5db; background: transparent; color: inherit;
+      border-radius: 8px; padding: .15rem .6rem; font-size: .85rem; cursor: pointer;
+    }
+    .lang-toggle:hover { border-color: #1a56db; }
   </style>
 </head>
 <body>
 <main>
-  <h1>Privacy Policy</h1>
-  <p class="meta">X Observatory &middot; Last updated: 2026-09-02</p>
+  <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">中文 / EN</button>
+  <h1 data-i18n="title">Privacy Policy</h1>
+  <p class="meta">X Observatory &middot; <span data-i18n="updated">Last updated: 2026-09-02</span></p>
 
   <div class="card">
-    <p>
+    <p data-i18n="intro">
       X Observatory is a local-first, read-only Chrome extension for researching public X
       accounts and content selected by the user.
     </p>
 
-    <h2>Data handled</h2>
-    <p>
+    <h2 data-i18n="dataHandledTitle">Data handled</h2>
+    <p data-i18n="dataHandled1">
       The extension may handle public X profile, relationship, search, post, and
       post-participant data when the user starts a collection task. It also handles
       collection job metadata, source coverage, evidence, derived topics, intent, and
@@ -52,7 +58,7 @@
       or removes the extension. Standard data exports are created only on explicit user
       action.
     </p>
-    <p>
+    <p data-i18n="dataHandled2">
       Google OAuth is used only to establish the current user's identity for the X
       Observatory service. The Google access token remains in Chrome Identity cache and
       transient extension/auth-function memory. The auth function validates its audience
@@ -60,7 +66,7 @@
       The service does not store the Google account identifier, email address, token, or
       service token.
     </p>
-    <p>
+    <p data-i18n="dataHandled3">
       X cookies, CSRF tokens, Authorization values, transaction IDs, Google access
       tokens, and service tokens are not written to IndexedDB, extension persistent
       storage, exports, application logs, or analytics. X cookies remain browser-managed;
@@ -68,8 +74,8 @@
       wrapper.
     </p>
 
-    <h2>Service boundary</h2>
-    <p>
+    <h2 data-i18n="serviceBoundaryTitle">Service boundary</h2>
+    <p data-i18n="serviceBoundary1">
       The transaction service receives only the read-only method/path, public
       verification key, animation frame paths, and public X JavaScript asset URL needed
       to generate a single-use transaction ID. It does not receive X cookies, CSRF,
@@ -77,40 +83,112 @@
       body, or X response data.
     </p>
 
-    <h2>What we do not do</h2>
-    <p>
+    <h2 data-i18n="notDoTitle">What we do not do</h2>
+    <p data-i18n="notDo1">
       The extension does not sell data, use data for advertising, transfer data to data
       brokers, or permit human review of collected content. It does not infer political,
       health, religious, racial or ethnic, sexual-orientation, or financial attributes.
       It performs no write actions on X: no follows, likes, reposts, replies, or messages.
     </p>
 
-    <h2>User control and security</h2>
-    <p>
+    <h2 data-i18n="controlTitle">User control and security</h2>
+    <p data-i18n="control1">
       Users choose the target and sources, can stop collection at any time, can delete
       local projects, and can choose whether to export data. Missing or incomplete
       sources remain Unknown and are traceable to their collection job and source.
       Service traffic uses HTTPS, bounded schemas, fixed read-only allowlists, and
       short-lived tokens.
     </p>
-    <p>
+    <p data-i18n="control2">
       Use of information received from Google APIs complies with the
       <a href="https://developers.google.com/terms/api-services-user-data-policy">Google
       API Services User Data Policy</a>, including the Limited Use requirements.
     </p>
 
-    <h2>Contact</h2>
-    <p>
+    <h2 data-i18n="contactTitle">Contact</h2>
+    <p data-i18n="contact1">
       Report privacy or security issues to
       <a href="mailto:jlee07905@gmail.com">jlee07905@gmail.com</a> or at
-      <a href="https://github.com/TabTabZL/x-observatory-public/issues">GitHub Issues</a>.
+      <a href="https://github.com/cChixigua/x-observatory-public/issues">GitHub Issues</a>.
     </p>
   </div>
 
   <footer>
     <a href="./">&larr; X Observatory</a> &middot;
-    This site sets no cookies, runs no analytics, and loads no third-party scripts.
+    <span data-i18n="footerNote">This site sets no cookies, runs no analytics, and loads no third-party scripts.</span>
   </footer>
 </main>
+<script>
+(function () {
+  "use strict";
+  var STRINGS = {
+    en: {
+      title: "Privacy Policy",
+      updated: "Last updated: 2026-09-02",
+      intro: "X Observatory is a local-first, read-only Chrome extension for researching public X accounts and content selected by the user.",
+      dataHandledTitle: "Data handled",
+      dataHandled1: "The extension may handle public X profile, relationship, search, post, and post-participant data when the user starts a collection task. It also handles collection job metadata, source coverage, evidence, derived topics, intent, and scores. Raw business data is stored in browser IndexedDB until the user deletes it or removes the extension. Standard data exports are created only on explicit user action.",
+      dataHandled2: "Google OAuth is used only to establish the current user's identity for the X Observatory service. The Google access token remains in Chrome Identity cache and transient extension/auth-function memory. The auth function validates its audience and issues a pseudonymous, user-bound service token valid for at most five minutes. The service does not store the Google account identifier, email address, token, or service token.",
+      dataHandled3: "X cookies, CSRF tokens, Authorization values, transaction IDs, Google access tokens, and service tokens are not written to IndexedDB, extension persistent storage, exports, application logs, or analytics. X cookies remain browser-managed; X Authorization and CSRF values remain in the active page's in-memory request wrapper.",
+      serviceBoundaryTitle: "Service boundary",
+      serviceBoundary1: "The transaction service receives only the read-only method/path, public verification key, animation frame paths, and public X JavaScript asset URL needed to generate a single-use transaction ID. It does not receive X cookies, CSRF, Authorization values, request variables, features, cursors, account input, request body, or X response data.",
+      notDoTitle: "What we do not do",
+      notDo1: "The extension does not sell data, use data for advertising, transfer data to data brokers, or permit human review of collected content. It does not infer political, health, religious, racial or ethnic, sexual-orientation, or financial attributes. It performs no write actions on X: no follows, likes, reposts, replies, or messages.",
+      controlTitle: "User control and security",
+      control1: "Users choose the target and sources, can stop collection at any time, can delete local projects, and can choose whether to export data. Missing or incomplete sources remain Unknown and are traceable to their collection job and source. Service traffic uses HTTPS, bounded schemas, fixed read-only allowlists, and short-lived tokens.",
+      control2: "Use of information received from Google APIs complies with the Google API Services User Data Policy, including the Limited Use requirements.",
+      contactTitle: "Contact",
+      contact1: "Report privacy or security issues to jlee07905@gmail.com or at GitHub Issues.",
+      footerNote: "This site sets no cookies, runs no analytics, and loads no third-party scripts."
+    },
+    zh: {
+      title: "隐私政策",
+      updated: "最后更新：2026-09-02",
+      intro: "X Observatory 是一款本地优先、只读的 Chrome 扩展，用于研究用户选定的公开 X 账号与内容。",
+      dataHandledTitle: "处理的数据",
+      dataHandled1: "当用户启动采集任务时，扩展可能处理公开的 X 资料、关系、搜索、帖子和帖子参与者数据，同时处理采集任务元数据、来源覆盖、证据、派生主题、意向与评分。原始业务数据保存在浏览器 IndexedDB 中，直到用户删除或移除扩展。标准数据导出仅在用户显式操作时创建。",
+      dataHandled2: "Google OAuth 仅用于为 X Observatory 服务确认当前用户身份。Google 访问令牌保留在 Chrome Identity 缓存和扩展/认证函数的瞬时内存中。认证函数校验受众后签发绑定用户、最长五分钟有效的假名服务令牌。服务不存储 Google 账号标识、邮箱地址、令牌或服务令牌。",
+      dataHandled3: "X Cookie、CSRF 令牌、Authorization 值、事务 ID、Google 访问令牌和服务令牌不会写入 IndexedDB、扩展持久化存储、导出文件、应用日志或分析系统。X Cookie 由浏览器管理；X Authorization 与 CSRF 值仅存在于活动页面的内存请求包装器中。",
+      serviceBoundaryTitle: "服务边界",
+      serviceBoundary1: "事务服务只接收生成单次事务 ID 所需的只读 method/path、公开验证密钥、动画帧路径和公开的 X JavaScript 资源 URL。它不会收到 X Cookie、CSRF、Authorization 值、请求 variables/features、游标、账号输入、请求体或 X 响应数据。",
+      notDoTitle: "我们不做什么",
+      notDo1: "扩展不出售数据、不将数据用于广告、不向数据经纪商转移数据、不允许人工审阅采集内容。不推断政治、健康、宗教、种族、性取向或财务属性。对 X 不执行任何写操作：不关注、不点赞、不转发、不回复、不发私信。",
+      controlTitle: "用户控制与安全",
+      control1: "用户自行选择目标与来源，可随时停止采集、删除本地项目并决定是否导出数据。缺失或不完整的来源保持 Unknown，可追溯到对应的采集任务与来源。服务流量使用 HTTPS、有界 schema、固定只读白名单和短时令牌。",
+      control2: "从 Google API 收到的信息的使用符合《Google API 服务用户数据政策》（含有限使用要求）。",
+      contactTitle: "联系方式",
+      contact1: "隐私或安全问题请联系 jlee07905@gmail.com，或在 GitHub Issues 中提交。",
+      footerNote: "本站不设置 Cookie、不做数据分析、不加载第三方脚本。"
+    }
+  };
+  function detectLang() {
+    var params = new URLSearchParams(location.search);
+    var fromQuery = params.get("lang");
+    if (fromQuery === "zh" || fromQuery === "en") return fromQuery;
+    try {
+      var saved = localStorage.getItem("xo-public-locale");
+      if (saved === "zh" || saved === "en") return saved;
+    } catch (e) { /* ignore */ }
+    return (navigator.language || "").toLowerCase().indexOf("zh") === 0 ? "zh" : "en";
+  }
+  function apply(lang) {
+    var dict = STRINGS[lang];
+    document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+    document.title = dict.title + " — X Observatory";
+    var nodes = document.querySelectorAll("[data-i18n]");
+    for (var i = 0; i < nodes.length; i++) {
+      var key = nodes[i].getAttribute("data-i18n");
+      if (dict[key]) nodes[i].textContent = dict[key];
+    }
+    try { localStorage.setItem("xo-public-locale", lang); } catch (e) { /* ignore */ }
+  }
+  var lang = detectLang();
+  apply(lang);
+  document.getElementById("lang-toggle").addEventListener("click", function () {
+    lang = lang === "zh" ? "en" : "zh";
+    apply(lang);
+  });
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="u4gccFSC9S6cdTLN9QisEZ64qAh5bHjxp1AZG95FX2Q">
+  <title>Feedback — X Observatory</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0; line-height: 1.7;
+      background: #fafafa; color: #1a1a1a;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { background: #14171c; color: #e6e8eb; }
+      a { color: #7ab8ff; }
+      .card, footer, input, textarea, select {
+        background: #1c2027 !important; border-color: #2c323c !important;
+      }
+    }
+    main { max-width: 720px; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+    h1 { font-size: 1.7rem; }
+    .card {
+      background: #fff; border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 1.5rem 1.75rem; margin-top: 1.5rem;
+    }
+    .meta { color: #6b7280; font-size: .95rem; }
+    footer {
+      border-top: 1px solid #e5e7eb; margin-top: 3rem; padding-top: 1.25rem;
+      font-size: .9rem; color: #6b7280;
+    }
+    a { color: #1a56db; }
+    label { display: block; font-weight: 600; margin: 1rem 0 .3rem; }
+    input, textarea, select {
+      width: 100%; box-sizing: border-box; padding: .5rem .6rem;
+      border: 1px solid #d1d5db; border-radius: 8px; font: inherit; color: inherit;
+      background: #fff;
+    }
+    textarea { resize: vertical; min-height: 8rem; }
+    button {
+      font: inherit; border-radius: 8px; padding: .45rem 1rem; cursor: pointer;
+      border: 1px solid #1a56db; background: #1a56db; color: #fff;
+    }
+    button.secondary { background: transparent; color: inherit; border-color: #9ca3af; }
+    .actions { margin-top: 1.25rem; display: flex; gap: .75rem; flex-wrap: wrap; }
+    .notice { color: #b91c1c; }
+    .lang-toggle {
+      float: right; border: 1px solid #d1d5db; background: transparent; color: inherit;
+      border-radius: 8px; padding: .15rem .6rem; font-size: .85rem; cursor: pointer;
+    }
+    .lang-toggle:hover { border-color: #1a56db; }
+  </style>
+</head>
+<body>
+<main>
+  <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">中文 / EN</button>
+  <h1 data-i18n="title">Send feedback</h1>
+  <p class="meta" data-i18n="intro">Tell us what worked and what did not.</p>
+
+  <div class="card">
+    <form id="feedback-form">
+      <label for="category" data-i18n="categoryLabel">Category</label>
+      <select id="category">
+        <option value="bug" data-i18n="catBug">Something is broken</option>
+        <option value="feature" data-i18n="catFeature">Feature request</option>
+        <option value="other" data-i18n="catOther">Something else</option>
+      </select>
+
+      <label for="message" data-i18n="messageLabel">What happened?</label>
+      <textarea id="message" data-i18n-placeholder="messagePlaceholder"
+        placeholder="Describe what you did, what you expected, and what happened instead."></textarea>
+
+      <label for="contact" data-i18n="contactLabel">Contact (optional)</label>
+      <input id="contact" type="text" data-i18n-placeholder="contactPlaceholder"
+        placeholder="Email or X handle if you want a reply">
+
+      <p class="notice" id="required-notice" hidden data-i18n="requiredMissing">Please describe the feedback first.</p>
+
+      <p data-i18n="privacyNote">Feedback opens in GitHub Issues for you to review and submit — nothing is sent by this page itself. Do not include X credentials or private data.</p>
+
+      <div class="actions">
+        <button type="submit" data-i18n="submitButton">Continue to GitHub Issues</button>
+      </div>
+    </form>
+  </div>
+
+  <footer>
+    <a href="./">&larr; X Observatory</a> &middot;
+    <span data-i18n="footerNote">This site sets no cookies, runs no analytics, and loads no third-party scripts.</span>
+  </footer>
+</main>
+<script>
+(function () {
+  "use strict";
+  var REPO_ISSUES = "https://github.com/cChixigua/x-observatory-public/issues/new";
+  var STRINGS = {
+    en: {
+      title: "Send feedback",
+      intro: "Tell us what worked and what did not.",
+      categoryLabel: "Category",
+      catBug: "Something is broken",
+      catFeature: "Feature request",
+      catOther: "Something else",
+      messageLabel: "What happened?",
+      messagePlaceholder: "Describe what you did, what you expected, and what happened instead.",
+      contactLabel: "Contact (optional)",
+      contactPlaceholder: "Email or X handle if you want a reply",
+      requiredMissing: "Please describe the feedback first.",
+      privacyNote: "Feedback opens in GitHub Issues for you to review and submit — nothing is sent by this page itself. Do not include X credentials or private data.",
+      issueTitle: "[Feedback] ",
+      issueBodyIntro: "## Feedback\n\n",
+      issueBodyContact: "\n\n---\nContact: ",
+      submitButton: "Continue to GitHub Issues",
+      footerNote: "This site sets no cookies, runs no analytics, and loads no third-party scripts."
+    },
+    zh: {
+      title: "提交意见反馈",
+      intro: "告诉我们哪里好用、哪里不好用。",
+      categoryLabel: "类型",
+      catBug: "功能异常",
+      catFeature: "功能建议",
+      catOther: "其他",
+      messageLabel: "发生了什么？",
+      messagePlaceholder: "描述你做了什么、期望什么、实际发生了什么。",
+      contactLabel: "联系方式（可选）",
+      contactPlaceholder: "如需回复请留邮箱或 X 账号",
+      requiredMissing: "请先填写反馈内容。",
+      privacyNote: "反馈将跳转到 GitHub Issues 供你确认后提交——本页面本身不发送任何数据。请勿包含 X 凭证或隐私数据。",
+      issueTitle: "[反馈] ",
+      issueBodyIntro: "## 反馈内容\n\n",
+      issueBodyContact: "\n\n---\n联系方式：",
+      submitButton: "前往 GitHub Issues 提交",
+      footerNote: "本站不设置 Cookie、不做数据分析、不加载第三方脚本。"
+    }
+  };
+  function detectLang() {
+    var params = new URLSearchParams(location.search);
+    var fromQuery = params.get("lang");
+    if (fromQuery === "zh" || fromQuery === "en") return fromQuery;
+    try {
+      var saved = localStorage.getItem("xo-public-locale");
+      if (saved === "zh" || saved === "en") return saved;
+    } catch (e) { /* ignore */ }
+    return (navigator.language || "").toLowerCase().indexOf("zh") === 0 ? "zh" : "en";
+  }
+  function applyText(node, value) {
+    node.textContent = value;
+  }
+  function apply(lang) {
+    var dict = STRINGS[lang];
+    document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+    document.title = dict.title + " — X Observatory";
+    var nodes = document.querySelectorAll("[data-i18n]");
+    for (var i = 0; i < nodes.length; i++) {
+      var key = nodes[i].getAttribute("data-i18n");
+      if (dict[key]) applyText(nodes[i], dict[key]);
+    }
+    var phs = document.querySelectorAll("[data-i18n-placeholder]");
+    for (var j = 0; j < phs.length; j++) {
+      var phKey = phs[j].getAttribute("data-i18n-placeholder");
+      if (dict[phKey]) phs[j].setAttribute("placeholder", dict[phKey]);
+    }
+    try { localStorage.setItem("xo-public-locale", lang); } catch (e) { /* ignore */ }
+    return dict;
+  }
+  var lang = detectLang();
+  var dict = apply(lang);
+  document.getElementById("lang-toggle").addEventListener("click", function () {
+    lang = lang === "zh" ? "en" : "zh";
+    dict = apply(lang);
+  });
+  document.getElementById("feedback-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    var message = document.getElementById("message").value.trim();
+    if (message === "") {
+      document.getElementById("required-notice").hidden = false;
+      return;
+    }
+    document.getElementById("required-notice").hidden = true;
+    var category = document.getElementById("category").value;
+    var contact = document.getElementById("contact").value.trim();
+    var body = dict.issueBodyIntro + message;
+    if (contact !== "") body += dict.issueBodyContact + contact;
+    var url = REPO_ISSUES +
+      "?labels=feedback" +
+      "&title=" + encodeURIComponent(dict.issueTitle + dict["cat" + category.charAt(0).toUpperCase() + category.slice(1)]) +
+      "&body=" + encodeURIComponent(body);
+    location.href = url;
+  });
+})();
+</script>
+</body>
+</html>
