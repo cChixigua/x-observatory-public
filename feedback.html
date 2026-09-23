@@ -50,6 +50,8 @@
       border-radius: 8px; padding: .15rem .6rem; font-size: .85rem; cursor: pointer;
     }
     .lang-toggle:hover { border-color: #1a56db; }
+    .alternates { font-size: .9rem; color: #6b7280; margin-top: 1rem; }
+    .thanks { color: #15803d; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -76,13 +78,19 @@
         placeholder="Email or X handle if you want a reply">
 
       <p class="notice" id="required-notice" hidden data-i18n="requiredMissing">Please describe the feedback first.</p>
+      <p class="notice" id="failed-notice" hidden data-i18n="submitFailed">Recording failed. Please use the email option below.</p>
+      <p class="thanks" id="thanks" hidden></p>
 
       <p data-i18n="privacyNote">Feedback opens in GitHub Issues for you to review and submit — nothing is sent by this page itself. Do not include X credentials or private data.</p>
 
       <div class="actions">
-        <button type="submit" data-i18n="submitButton">Continue to GitHub Issues</button>
-        <button type="button" class="secondary" id="mail-button" data-i18n="mailButton">Submit by email instead</button>
+        <button type="submit" data-i18n="submitButton">Submit</button>
       </div>
+      <p class="alternates">
+        <a href="javascript:void(0)" id="github-link" data-i18n="githubLink">Open a public GitHub issue instead</a>
+        &middot;
+        <a href="javascript:void(0)" id="mail-button" data-i18n="mailButton">Submit by email instead</a>
+      </p>
     </form>
   </div>
 
@@ -108,11 +116,14 @@
       contactLabel: "Contact (optional)",
       contactPlaceholder: "Email or X handle if you want a reply",
       requiredMissing: "Please describe the feedback first.",
-      privacyNote: "Feedback opens in GitHub Issues (submit there if you have an account) or in your mail client — nothing is sent by this page itself. Do not include X credentials or private data.",
+      privacyNote: "Your feedback is recorded anonymously on our service; only the fields above are stored. Do not include X credentials or private data.",
       issueTitle: "[Feedback] ",
       issueBodyIntro: "## Feedback\n\n",
       issueBodyContact: "\n\n---\nContact: ",
-      submitButton: "Continue to GitHub Issues",
+      submitButton: "Submit",
+      submitted: "Thanks! Your feedback has been recorded.",
+      submitFailed: "Recording failed. Please use the email option below.",
+      githubLink: "Open a public GitHub issue instead",
       mailButton: "Submit by email instead",
       mailSubject: "X Observatory feedback: ",
       footerNote: "This site sets no cookies, runs no analytics, and loads no third-party scripts."
@@ -129,11 +140,14 @@
       contactLabel: "联系方式（可选）",
       contactPlaceholder: "如需回复请留邮箱或 X 账号",
       requiredMissing: "请先填写反馈内容。",
-      privacyNote: "反馈可跳转 GitHub Issues（有账号时提交），或通过你的邮件客户端发送——本页面本身不发送任何数据。请勿包含 X 凭证或隐私数据。",
+      privacyNote: "反馈将匿名记录在我们的服务端，仅保存上方填写的内容。请勿包含 X 凭证或隐私数据。",
       issueTitle: "[反馈] ",
       issueBodyIntro: "## 反馈内容\n\n",
       issueBodyContact: "\n\n---\n联系方式：",
-      submitButton: "前往 GitHub Issues 提交",
+      submitButton: "提交",
+      submitted: "感谢！你的反馈已记录。",
+      submitFailed: "记录失败，请使用下方邮件方式提交。",
+      githubLink: "改为在 GitHub 提交公开 issue",
       mailButton: "改用邮件提交",
       mailSubject: "X Observatory 意见反馈：",
       footerNote: "本站不设置 Cookie、不做数据分析、不加载第三方脚本。"
@@ -169,6 +183,7 @@
     try { localStorage.setItem("xo-public-locale", lang); } catch (e) { /* ignore */ }
     return dict;
   }
+  var FEEDBACK_ENDPOINT = "https://transacon-id-fc-arntcsmslt.us-east-1.fcapp.run/feedback";
   var lang = detectLang();
   var dict = apply(lang);
   document.getElementById("lang-toggle").addEventListener("click", function () {
@@ -184,6 +199,38 @@
     }
     document.getElementById("required-notice").hidden = true;
     var category = document.getElementById("category").value;
+    var contact = document.getElementById("contact").value.trim();
+    var body = dict.issueBodyIntro + message;
+    if (contact !== "") body += dict.issueBodyContact + contact;
+    var contact = document.getElementById("contact").value.trim();
+    fetch(FEEDBACK_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ v: 1, category: category, message: message, contact: contact })
+    }).then(function (res) {
+      if (!res.ok) throw new Error("record failed");
+      showThanks();
+    }).catch(function () {
+      document.getElementById("required-notice").hidden = true;
+      document.getElementById("failed-notice").hidden = false;
+    });
+  });
+  function showThanks() {
+    var form = document.getElementById("feedback-form");
+    form.reset();
+    document.getElementById("required-notice").hidden = true;
+    document.getElementById("failed-notice").hidden = true;
+    var thanks = document.getElementById("thanks");
+    thanks.textContent = dict.submitted;
+    thanks.hidden = false;
+  }
+  document.getElementById("github-link").addEventListener("click", function () {
+    var category = document.getElementById("category").value;
+    var message = document.getElementById("message").value.trim();
+    if (message === "") {
+      document.getElementById("required-notice").hidden = false;
+      return;
+    }
     var contact = document.getElementById("contact").value.trim();
     var body = dict.issueBodyIntro + message;
     if (contact !== "") body += dict.issueBodyContact + contact;
