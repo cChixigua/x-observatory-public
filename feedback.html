@@ -50,7 +50,6 @@
       border-radius: 8px; padding: .15rem .6rem; font-size: .85rem; cursor: pointer;
     }
     .lang-toggle:hover { border-color: #1a56db; }
-    .alternates { font-size: .9rem; color: #6b7280; margin-top: 1rem; }
     .thanks { color: #15803d; font-weight: 600; }
   </style>
 </head>
@@ -86,11 +85,6 @@
       <div class="actions">
         <button type="submit" data-i18n="submitButton">Submit</button>
       </div>
-      <p class="alternates">
-        <a href="javascript:void(0)" id="github-link" data-i18n="githubLink">Open a public GitHub issue instead</a>
-        &middot;
-        <a href="javascript:void(0)" id="mail-button" data-i18n="mailButton">Submit by email instead</a>
-      </p>
     </form>
   </div>
 
@@ -102,7 +96,6 @@
 <script>
 (function () {
   "use strict";
-  var REPO_ISSUES = "https://github.com/cChixigua/x-observatory-public/issues/new";
   var STRINGS = {
     en: {
       title: "Send feedback",
@@ -122,9 +115,6 @@
       issueBodyContact: "\n\n---\nContact: ",
       submitButton: "Submit",
       submitted: "Thanks! Your feedback has been recorded.",
-      submitFailed: "Recording failed. Please use the email option below.",
-      githubLink: "Open a public GitHub issue instead",
-      mailButton: "Submit by email instead",
       mailSubject: "X Observatory feedback: ",
       footerNote: "This site sets no cookies, runs no analytics, and loads no third-party scripts."
     },
@@ -146,9 +136,6 @@
       issueBodyContact: "\n\n---\n联系方式：",
       submitButton: "提交",
       submitted: "感谢！你的反馈已记录。",
-      submitFailed: "记录失败，请使用下方邮件方式提交。",
-      githubLink: "改为在 GitHub 提交公开 issue",
-      mailButton: "改用邮件提交",
       mailSubject: "X Observatory 意见反馈：",
       footerNote: "本站不设置 Cookie、不做数据分析、不加载第三方脚本。"
     }
@@ -224,36 +211,6 @@
     thanks.textContent = dict.submitted;
     thanks.hidden = false;
   }
-  document.getElementById("github-link").addEventListener("click", function () {
-    var category = document.getElementById("category").value;
-    var message = document.getElementById("message").value.trim();
-    if (message === "") {
-      document.getElementById("required-notice").hidden = false;
-      return;
-    }
-    var contact = document.getElementById("contact").value.trim();
-    var body = dict.issueBodyIntro + message;
-    if (contact !== "") body += dict.issueBodyContact + contact;
-    var url = REPO_ISSUES +
-      "?labels=feedback" +
-      "&title=" + encodeURIComponent(dict.issueTitle + dict["cat" + category.charAt(0).toUpperCase() + category.slice(1)]) +
-      "&body=" + encodeURIComponent(body);
-    location.href = url;
-  });
-  document.getElementById("mail-button").addEventListener("click", function () {
-    var category = document.getElementById("category").value;
-    var message = document.getElementById("message").value.trim();
-    if (message === "") {
-      document.getElementById("required-notice").hidden = false;
-      return;
-    }
-    var contact = document.getElementById("contact").value.trim();
-    var body = dict.issueBodyIntro + message;
-    if (contact !== "") body += dict.issueBodyContact + contact;
-    location.href = "mailto:jlee07905@gmail.com?subject=" +
-      encodeURIComponent(dict.mailSubject + dict["cat" + category.charAt(0).toUpperCase() + category.slice(1)]) +
-      "&body=" + encodeURIComponent(body);
-  });
 })();
 </script>
 </body>
